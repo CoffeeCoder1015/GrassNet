@@ -9,6 +9,16 @@ class Layer:
     @abstractmethod
     def run(self,x: np.ndarray) -> np.ndarray: ...
 
+class Linear(Layer):
+    def __init__(self, input_size, output_size):
+        super().__init__("lin")
+        # He initialization for ReLU
+        self.m = np.random.randn(input_size, output_size) * np.sqrt(2 / input_size)
+        self.b = np.zeros(output_size)
+
+    def run(self, x: np.ndarray):
+        return np.dot(x, self.m) + self.b
+
 class Activation(Layer):
     def __init__(self,function,deriv_function):
         super().__init__("act")
