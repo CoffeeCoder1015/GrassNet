@@ -1,5 +1,5 @@
 import numpy as np
-from layers import Layer
+from core.layers import Layer
 
 class Network:
     def __init__(self,architecture):
