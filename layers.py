@@ -18,5 +18,33 @@ class Activation(Layer):
     def run(self, x):
         return self.f(x)
 
-    def backprop(self, grad_output, layer_input):
-        return grad_output * self.derivative_func(layer_input)
+class Relu(Activation):
+    def __init__(self):
+        super().__init__(
+            lambda x: np.where(x>0,x,0), 
+            lambda x: np.where(x>0,1,0)
+        )
+
+class Tanh(Activation):
+    def __init__(self):
+        super().__init__(
+            np.tanh,
+            lambda x: 1 - np.pow(np.tanh(x),2)
+        )
+
+class LeakyRelu(Activation):
+    def __init__(self, alpha=0.01):
+        """
+        alpha: slope for negative inputs (default 0.01)
+        """
+        super().__init__(
+            function=lambda x: np.where(x > 0, x, alpha * x),
+            deriv_function=lambda x: np.where(x > 0, 1, alpha)
+        )
+
+class Softplus(Activation):
+    def __init__(self):
+        super().__init__(
+            lambda x: np.log1p(np.exp(-np.abs(x))) + np.maximum(x, 0),  # stable softplus
+            lambda x: 1 / (1 + np.exp(-x))  # derivative = sigmoid(x)
+        )
