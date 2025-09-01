@@ -7,6 +7,16 @@ This project is meant as both a **learning tool** and a **minimal framework** th
 
 ---
 
+<video style="scale:85%;" controls>
+  <source src="visualization.mp4" type="video/mp4">
+</video>
+<div style="text-align: center;">
+    Generated via 
+    <a href="visualize.py">visualize.py</a>
+</div>
+
+---
+
 ## Features
 - Custom API for defining feedforward networks  
 - Layers: `Linear` (Dense), activation functions (`ReLU`, `Softplus`, etc.)  
@@ -43,7 +53,7 @@ n.backprop(Y)     # Do one backpropagation iteration based on Y
 n.run(X)          # Standard run for inference
 
 ```
-Full example found in `main.py`. 
+Full example found in [main.py](main.py)
 
 `main.py` implements a *sequence-to-sequence* prediction example:
 
