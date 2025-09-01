@@ -7,9 +7,8 @@ This project is meant as both a **learning tool** and a **minimal framework** th
 
 ---
 
-<video style="scale:85%;" controls>
-  <source src="visualization.mp4" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/175e5349-a536-4fad-be6e-2dda7a88e997
+
 <div style="text-align: center;">
     Generated via 
     <a href="visualize.py">visualize.py</a>
