@@ -55,6 +55,10 @@ Full example found in `main.py`.
 
 4. Plots both the original and predicted wave
 
+There is also a variant of `main.py` found in `regression.py` which implements regression
+prediction instead of *sequence-to-sequence* prediction.
+
+
 ## Project structure
 ```
 .
@@ -64,6 +68,7 @@ Full example found in `main.py`.
 │   └── optim.py      # AdamW optimizer
 ├── data_tools.py     # Utility functions for batching
 ├── main.py           # Example: sin(x) sequence prediction
+├── regression.py     # Same as main.py but is regression instead
 └── README.md
 ```
 
