@@ -3,6 +3,8 @@ from core.network import Network
 import numpy as np
 import matplotlib.pyplot as plt
 
+from data_tools import get_batches
+
 n = Network([
     Linear(1,64),
     Softplus(),
@@ -19,15 +21,6 @@ Y = np.tan(X)
 nX = X.reshape(-1,1)
 nY = Y.reshape(-1,1)
 
-# Batch generator
-def get_batches(X, Y, batch_size=100):
-    n_samples = X.shape[0]
-    indices = np.arange(n_samples)
-    np.random.shuffle(indices)
-    for start in range(0, n_samples, batch_size):
-        end = start + batch_size
-        batch_idx = indices[start:end]
-        yield X[batch_idx], Y[batch_idx]
 
 # Training loop with mini-batches
 batch_size = 200
