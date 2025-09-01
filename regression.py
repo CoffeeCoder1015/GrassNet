@@ -24,8 +24,8 @@ n.MSELoss()
 n.InitOptimizer()
 
 # --- Training loop ---
-batch_size = 1000
-epochs = 2000
+batch_size = 200
+epochs = 550
 
 for epoch in range(epochs):
     epoch_loss = 0
