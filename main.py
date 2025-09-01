@@ -1,4 +1,4 @@
-from core.layers import Linear, Relu, Softplus
+from core.layers import Linear, Softplus
 from core.network import Network
 import numpy as np
 import matplotlib.pyplot as plt
