@@ -11,6 +11,7 @@ n = Network([
     Linear(64,1)
 ])   
 n.MSELoss()
+n.InitOptimizer()
 
 # Example 1D dataset
 X = np.linspace(-10,10,200)

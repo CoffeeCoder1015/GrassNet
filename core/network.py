@@ -1,5 +1,6 @@
 import numpy as np
 from core.layers import Layer
+from core.optimzer import AdamW
 
 class Network:
     def __init__(self,architecture):
@@ -8,6 +9,8 @@ class Network:
         self.loss_d = None
         self.outputs = []
         self.loss_mag  = 0
+        
+        self.adamw_tracker = {}
     
     def run(self,X):
         current = X
@@ -27,7 +30,6 @@ class Network:
         self.loss_mag = self.loss(Y,self.outputs[-1])
         return self.loss_mag
     
-    
     def backprop(self, Y):
         grad = self.loss_d(self.outputs[-1], Y)  # dL/dOutput
         # loop backwards through layers
@@ -35,12 +37,14 @@ class Network:
             layer = self.arch[i]
             x_input = self.outputs[i]  # input to this layer
             if layer.type == "lin":
-                grad = np.dot(grad,layer.m.T)
+                grad = self.adamw_tracker[i].backprop(layer,x_input,grad)
             elif layer.type == "act":
                 grad = grad*layer.derivative_func(x_input)
 
-    def AdamW(self):
-        pass
+    def InitOptimizer(self,lr=0.01):
+        for i,layer in enumerate( self.arch ):
+            if layer.type == "lin":
+                self.adamw_tracker[i] = AdamW(lr,layer.m.shape,layer.b.shape)
 
     def MSELoss(self):
         self.loss = lambda yt,yp: np.pow(yt-yp,2).mean()
