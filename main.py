@@ -33,7 +33,7 @@ print(nX.shape,nY.shape)
 
 # Training loop with mini-batches
 batch_size = 32
-epochs = 30
+epochs = 50
 
 for epoch in range(epochs):
     epoch_loss = 0
