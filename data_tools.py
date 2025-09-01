@@ -27,7 +27,6 @@ def init_heatmap(ax, matrix, cmap='viridis'):
     ax.set_yticks(np.arange(rows))
     ax.set_xlabel("Column Index")
     ax.set_ylabel("Row Index")
-    ax.set_title("Matrix Heatmap")
 
     # Create annotations
     annotations = []
