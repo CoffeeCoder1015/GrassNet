@@ -1,30 +1,39 @@
-from core.layers import Linear, Softplus
+from core.layers import Linear, Relu, Softplus
 from core.network import Network
 import numpy as np
 import matplotlib.pyplot as plt
+from numpy.lib.stride_tricks import sliding_window_view
 
 from data_tools import get_batches
 
+input_length = 5
 n = Network([
-    Linear(1,64),
+    Linear(input_length,16),
     Softplus(),
-    Linear(64,64),
+    Linear(16,16),
     Softplus(),
-    Linear(64,1)
+    Linear(16,16),
+    Softplus(),
+    Linear(16,1)
 ])   
 n.MSELoss()
 n.InitOptimizer()
 
-# Example 1D dataset
-X = np.linspace(-10,10,200)
-Y = np.tan(X)
-nX = X.reshape(-1,1)
-nY = Y.reshape(-1,1)
+ref_X = np.linspace(-100,100,1000)
+ref_Y = np.sin(ref_X)
 
+plt.plot(ref_X,ref_Y)
+
+train_data = sliding_window_view(ref_Y,input_length+1)
+train_x = train_data[:,:input_length]
+train_y = train_data[:,input_length:]
+nX = train_x.reshape(-1,input_length)
+nY = train_y.reshape(-1,1)
+print(nX.shape,nY.shape)
 
 # Training loop with mini-batches
-batch_size = 200
-epochs = 5000
+batch_size = 32
+epochs = 30
 
 for epoch in range(epochs):
     epoch_loss = 0
@@ -35,13 +44,12 @@ for epoch in range(epochs):
         epoch_loss += batch_loss * len(batch_X)  # sum of MSE over batch
     
     epoch_loss /= len(nX)  # average over all samples
-    if epoch % 50 == 0:
-        print(f"Epoch {epoch}: Loss = {epoch_loss:.6f}")
+    print(f"Epoch {epoch}: Loss = {epoch_loss:.6f}")
 
-plt.plot(nX,nY)
+start_seq = ref_Y[:input_length]
+for i in range(1000-input_length):
+    result = n.run(start_seq[-input_length:])
+    start_seq = np.append(start_seq,result)
 
-X = np.linspace(-100,100,500)
-nX = X.reshape(-1,1)
-pred_y = n.run(nX)
-plt.plot(nX,pred_y)
+plt.plot(ref_X,start_seq)
 plt.show()
